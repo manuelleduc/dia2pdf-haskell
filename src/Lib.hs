@@ -32,7 +32,6 @@ main = sh (do
   liftIO $ do
     testFileExist argPath
     putStrLn $ unpack ("Processing " <>  format fp argPath)
-    --putStrLn $ unpack ("dia " <> format fp argPath <> " -e " <> format fp tmp <> " -t svg")
     shell ("dia " <> format fp argPath <> " -e " <> format fp tmp <> " -t svg") empty
     testFileExist tmp
     let pdfFile = replaceExtension argPath "pdf"
