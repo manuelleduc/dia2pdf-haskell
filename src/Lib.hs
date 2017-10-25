@@ -1,8 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Lib
-    ( main
-      ) where
+module Lib (main) where
 
 import           Data.Text       (pack, unpack)
 import           Filesystem.Path (replaceExtension)
@@ -16,8 +14,6 @@ createTmpFile :: Shell (FilePath, Handle)
 createTmpFile = do
   tempdir <- using (mktempdir "/tmp" "dia2pdf")
   using (mktemp tempdir "tmp")
-
-
 
 testFileExist :: FilePath -> IO ()
 testFileExist a = do
