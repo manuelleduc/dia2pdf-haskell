@@ -2,6 +2,8 @@
 
 `dia2pdf` is a dia to pdf command line tool.
 
+This is a clone of https://git.framasoft.org/Gwendal/helpful-scripts/blob/master/jshell/dia2pdf.jsh (by @ebousse) in Haskell.
+
 ## Dependencies
 ### Build
 
