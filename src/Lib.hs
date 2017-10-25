@@ -20,17 +20,20 @@ testFileExist a = do
   b <- testfile a
   unless b $ die $ format fp a <> " does not exist"
 
+dia2pdf :: FilePath -> FilePath -> IO ()
+dia2pdf argPath tmp = do
+  argPathExist <- testfile argPath
+  testFileExist argPath
+  putStrLn $ unpack ("Processing " <>  format fp argPath)
+  shell ("dia " <> format fp argPath <> " -e " <> format fp tmp <> " -t svg") empty
+  testFileExist tmp
+  let pdfFile = replaceExtension argPath "pdf"
+  shell ("inkscape --without-gui --export-pdf=" <> format fp pdfFile <> " --export-area-drawing " <> format fp argPath) empty
+  testFileExist pdfFile
+
 main :: IO ()
 main = sh (do
   argPath <- options "dia2svg" parser
   (tmp, _) <- createTmpFile
-  argPathExist <- liftIO $ testfile argPath
-  liftIO $ do
-    testFileExist argPath
-    putStrLn $ unpack ("Processing " <>  format fp argPath)
-    shell ("dia " <> format fp argPath <> " -e " <> format fp tmp <> " -t svg") empty
-    testFileExist tmp
-    let pdfFile = replaceExtension argPath "pdf"
-    shell ("inkscape --without-gui --export-pdf=" <> format fp pdfFile <> " --export-area-drawing " <> format fp argPath) empty
-    testFileExist pdfFile
+  liftIO $ dia2pdf argPath tmp
   )
